@@ -2,6 +2,7 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@page session="true"%>
 <html>
 <head>
@@ -13,14 +14,14 @@
 	href='resources/plugin/bootstrap/css/bootstrap.min.css'>
 <link rel='stylesheet' href='resources/css/login.css'>
 <!------ Include the above in your HEAD tag ---------->
-<title>Inventory</title>
+<title><spring:message code="login.page.title"></spring:message></title>
 </head>
 <body>
 	<section class="login-block">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4 login-sec">
-				<h2 class="text-center">Login Now</h2>
+				<h2 class="text-center"><spring:message code="login.page.form.section.label"></spring:message></h2>
 				<form name='loginForm' class="login-form" action="<c:url value='/auth/login_check?targetUrl=${targetUrl}' />" method="POST">
 					<c:if test="${not empty error}">
 						<div class="col-sm-12">
@@ -35,12 +36,12 @@
 					</c:if>
 					
 					<div class="form-group">
-						<label for="exampleInputEmail1" class="text-uppercase">Username</label>
+						<label for="exampleInputEmail1" class="text-uppercase"><spring:message code="login.page.username.label"></spring:message></label>
 						<input type="text" class="form-control" name="username"/>
 
 					</div>
 					<div class="form-group">
-						<label for="exampleInputPassword1" class="text-uppercase">Password</label>
+						<label for="exampleInputPassword1" class="text-uppercase"><spring:message code="login.page.password.label"></spring:message></label>
 						<input type="password" class="form-control" name="password"/>
 					</div>
 
@@ -48,11 +49,11 @@
 					<div class="form-check">
 						<c:if test="${empty loginUpdate}">
 							<label class="form-check-label"> <input type="checkbox"
-								class="form-check-input" name="remember-me"/> <small>Remember Me</small>
+								class="form-check-input" name="remember-me"/> <small><spring:message code="login.page.remember.me.label"></spring:message></small>
 							</label>
 						</c:if>
 
-						<button name="submit" type="submit" value="submit" class="btn btn-login float-right">Submit</button>
+						<button name="submit" type="submit" value="submit" class="btn btn-login float-right"><spring:message code="login.page.submit.button.label"></spring:message></button>
 					</div>
 					<input type="hidden" name="${_csrf.parameterName}"
 						value="${_csrf.token}" />
@@ -117,7 +118,7 @@
 	</div>
 	</section>
 
-	
+<jsp:include page="./footer.jsp"></jsp:include>	
 
 </body>
 </html>

@@ -9,5 +9,5 @@ public interface ItemDao {
 	void saveItem(Item item);
 	void updateItem(Item item);
 	Item findItem(Long id);
-	List<Item> findAllItem();
+	List<Item> findAllItems();
 }

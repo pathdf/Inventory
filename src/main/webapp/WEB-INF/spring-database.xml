@@ -35,10 +35,10 @@
 			<props>
 				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-				<prop key="hibernate.query.substitutions">true 'T', false 'F'</prop>
+				<!-- <prop key="hibernate.query.substitutions">true 'T', false 'F'</prop>
 				<prop key="hibernate.cache.use_second_level_cache">true</prop>
-				<prop key="hibernate.cache.use_query_cache">true</prop>
-				<prop key="hibernate.jdbc.batch_size">20</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop> -->
+				<!-- <prop key="hibernate.jdbc.batch_size">20</prop> -->
 			</props>
 		</property>
 

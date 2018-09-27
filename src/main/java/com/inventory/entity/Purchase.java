@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,7 +23,7 @@ public class Purchase {
 	private Long purchaseId;
 	
 	@OneToOne
-	@Column(name="item_vendor_assn", nullable = false, unique = true)
+	@JoinColumn(name="item_vendor_assn", nullable = false, unique = true)
 	private ItemVendorAssn itemVendorAssn;
 	
 	@Column(name="quantity", nullable = false)
