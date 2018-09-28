@@ -9,14 +9,15 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="resources/js/purchase.js"></script>
   <link rel="stylesheet" href="resources/css/footer.css">
 </head>
 <body>
  <jsp:include page="./header.jsp" />
 	 <form action="/action_page.php">
   <div class="form-group">
-    <label for="email">Email address:</label>
-    <input type="email" class="form-control" id="email">
+    <label for="itemName"><spring:message code="item.name.label"></spring:message></label>
+    <input type="text" class="form-control" id="itemName" name="itemName">
   </div>
   <div class="form-group">
     <label for="pwd">Password:</label>
@@ -25,9 +26,17 @@
   <div class="checkbox">
     <label><input type="checkbox"> Remember me</label>
   </div>
+  <input id="x_csrf_id" type="hidden" name="${_csrf.parameterName}"
+				value="${_csrf.token}" />
   <button type="submit" class="btn btn-default">Submit</button>
 </form> 
 <jsp:include page="./footer.jsp" />
+<script>
+$(document).ready(function(){
+	purchase.init();
+});
+
+</script>
 </body>
 
 </html>

@@ -12,7 +12,7 @@
 		<intercept-url pattern="/login" access="permitAll" />
 		<intercept-url pattern="/admin**" access="hasRole('Admin')" />
 		<intercept-url pattern="/**" access="hasAnyRole('User','Admin')" />
-
+		
 		<!-- access denied page -->
 		<access-denied-handler error-page="/403" />
 		<form-login login-page="/login" default-target-url="/welcome"
