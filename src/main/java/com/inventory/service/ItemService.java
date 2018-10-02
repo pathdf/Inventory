@@ -9,4 +9,5 @@ public interface ItemService {
 	void updateItem(Item item);
 	Item findItem(Long id);
 	List<Item> findAllItems();
+	public List<Item> findItemsByName(String itemName);
 }

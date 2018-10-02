@@ -11,43 +11,43 @@ purchase.reInitializeItem = function(){
 	this.item.status = 'Active';
 }
 
-purchase.init = function(){
-	$('#itemName').change(function(){
+purchase.init = function(data){
+	$('#itemName').keypress(function(){
 		purchase.reInitializeItem();
 		purchase.item.itemName = this.value;
-		purchase.getItemStatus(purchase.item);
+		purchase.getItemStatus(purchase.item, data.csrfToken);
 	});
 }
 
 
-purchase.getItemStatus = function(item){
+purchase.getItemStatus = function(item,csrfToken){
 	$.ajax({
 				headers: { 
 			        'Content-Type': 'application/json',
-			        'X-CSRF-TOKEN' : $('#x_csrf_id').val()
+			        'X-CSRF-TOKEN' : csrfToken
 			    },
 				type : 'POST',
-				url : 'getItemStatus.do',
+				url : 'getItems.do',
 				data : JSON.stringify(item),
 				dataType : 'json',
 				beforeSend : function(){
-					console.log("beforeSend");
-					console.log(item);
+					var itemList = document.getElementById('itemList');
+					itemList.innerHTML = "";
 				},
 				success : function(data){
-					console.log(data);
-					console.log('success');
+					var itemList = null;
+					if (data != null) {
+						itemList = document.getElementById('itemList');
+						data.forEach(function(item) {
+							var option = document.createElement('option');
+							option.value = item.itemName;
+							itemList.appendChild(option);
+				});
+			}
 				},
 				error : function(err){
 					console.log("error");
 					console.log(err);
-				},
-				complete : function(){
-					console.log("complete");
 				}
-				
-				
-				
 	});
 }
-

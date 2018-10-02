@@ -10,4 +10,5 @@ public interface ItemDao {
 	void updateItem(Item item);
 	Item findItem(Long id);
 	List<Item> findAllItems();
+	List<Item> findItemsByName(String itemName);
 }

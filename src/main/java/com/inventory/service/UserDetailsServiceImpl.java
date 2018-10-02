@@ -40,14 +40,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 		return new User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, authorities);
 	}
 
-/*	public UserDao getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(UserDao userDao) {
-		this.userDao = userDao;
-	}*/
-
-	
-
 }

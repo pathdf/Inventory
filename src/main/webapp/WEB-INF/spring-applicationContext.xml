@@ -11,9 +11,9 @@
 		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.1.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- <import resource="spring-database.xml"/>
+	<import resource="spring-database.xml"/>
 	<import resource="spring-security.xml"/>
-	<context:component-scan base-package="com.inventory" />
+	<!-- <context:component-scan base-package="com.inventory" /> -->
 	<context:annotation-config/>
 	<task:annotation-driven />
 	<bean
@@ -36,5 +36,5 @@
 		</property>
 		<property name="defaultEncoding" value="UTF-8"/>
 	</bean>
- -->
+
 </beans>

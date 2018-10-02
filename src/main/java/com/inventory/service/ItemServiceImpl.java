@@ -10,12 +10,12 @@ import com.inventory.dao.ItemDao;
 import com.inventory.entity.Item;
 
 @Service
-@Transactional
+@Transactional(readOnly=true)
 public class ItemServiceImpl implements ItemService {
 
 	@Autowired
 	private ItemDao itemDao;
-	
+
 	@Override
 	public void saveItem(Item item) {
 		itemDao.saveItem(item);
@@ -36,4 +36,8 @@ public class ItemServiceImpl implements ItemService {
 		return itemDao.findAllItems();
 	}
 
+	@Override
+	public List<Item> findItemsByName(String itemName) {
+		return itemDao.findItemsByName(itemName);
+	}
 }

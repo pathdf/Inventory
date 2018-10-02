@@ -6,12 +6,9 @@
 <%@page session="true"%>
 <html>
 <head>
-<script type='text/javascript'
-	src="resources/plugin/jquery/js/jquery-3.3.1.min.js"></script>
-<script type='text/javascript'
-	src="resources/plugin/bootstrap/js/bootstrap.min.js"></script>
-<link rel='stylesheet'
-	href='resources/plugin/bootstrap/css/bootstrap.min.css'>
+<script type='text/javascript' src="resources/plugin/jquery/js/jquery-3.3.1.min.js"></script>
+<script type='text/javascript' src="resources/plugin/bootstrap/js/bootstrap.min.js"></script>
+<link rel='stylesheet' href='resources/plugin/bootstrap/css/bootstrap.min.css'>
 <link rel='stylesheet' href='resources/css/login.css'>
 <!------ Include the above in your HEAD tag ---------->
 <title><spring:message code="login.page.title"></spring:message></title>

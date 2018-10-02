@@ -13,7 +13,7 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public void saveItem(Item item) {
 		sessionFactory.getCurrentSession().save(item);
@@ -26,12 +26,20 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public Item findItem(Long id) {
-	 return	(Item) sessionFactory.getCurrentSession().get(Item.class, id);
+		return (Item) sessionFactory.getCurrentSession().get(Item.class, id);
 	}
 
 	@Override
 	public List<Item> findAllItems() {
-		return sessionFactory.getCurrentSession().createCriteria(Item.class).list();
+		return sessionFactory.getCurrentSession().createCriteria(Item.class)
+				.list();
+	}
+
+	@Override
+	public List<Item> findItemsByName(String itemName) {
+		return (List<Item>) sessionFactory.getCurrentSession()
+				.createQuery("FROM Item i WHERE i.itemName LIKE :itemName")
+				.setParameter("itemName", itemName+"%").list();
 	}
 
 }
