@@ -79,9 +79,7 @@ public class LoginController {
 	public ModelAndView defaultPage() {
 
 		ModelAndView model = new ModelAndView();
-		model.addObject("title", "Spring Security + Hibernate Example");
-		model.addObject("message", "This is default page!");
-		model.setViewName("item");
+		model.setViewName("vendor");
 		return model;
 
 	}

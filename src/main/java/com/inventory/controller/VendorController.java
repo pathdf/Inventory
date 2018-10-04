@@ -16,7 +16,7 @@ import com.inventory.service.ItemService;
 import com.inventory.ui.bean.ItemBean;
 
 @Controller
-public class ItemController {
+public class VendorController {
 
 	@Autowired
 	private ItemService itemService;

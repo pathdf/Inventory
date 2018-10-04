@@ -2,6 +2,7 @@ package com.inventory.dao;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,9 +38,12 @@ public class ItemDaoImpl implements ItemDao {
 
 	@Override
 	public List<Item> findItemsByName(String itemName) {
+		if(StringUtils.isNotBlank(itemName)){
+			itemName+="%";
+		}
 		return (List<Item>) sessionFactory.getCurrentSession()
 				.createQuery("FROM Item i WHERE i.itemName LIKE :itemName")
-				.setParameter("itemName", itemName+"%").list();
+				.setParameter("itemName", itemName).list();
 	}
 
 }

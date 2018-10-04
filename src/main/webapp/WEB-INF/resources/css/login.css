@@ -107,6 +107,6 @@
 }
 
 .img-fluid {
-	width: 760px;
-	height: 500px;
+	width: 780px;
+	height: 500px !important;
 }

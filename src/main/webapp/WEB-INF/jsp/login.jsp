@@ -69,7 +69,7 @@
 						<li class="item3"></li>
 					</ol>
 					<div class="carousel-inner" role="listbox">
-						<div class="carousel-item active">
+						<div class="item active">
 							<img class="d-block img-fluid"
 								src="resources/images/pexels-photo.jpg" alt="First slide">
 							<div class="carousel-caption d-none d-md-block">
@@ -81,7 +81,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="carousel-item">
+						<div class="item">
 							<img class="d-block img-fluid"
 								src="resources/images/people-coffee-tea-meeting.jpg"
 								alt="First slide">
@@ -94,7 +94,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="carousel-item">
+						<div class="item">
 							<img class="d-block img-fluid"
 								src="resources/images/pexels-photo-872957.jpeg"
 								alt="First slide">
@@ -116,6 +116,25 @@
 	</section>
 
 <jsp:include page="./footer.jsp"></jsp:include>	
+<script>
+$(document).ready(function(){
+    // Activate Carousel
+    $("#carouselExampleIndicators").carousel();
+    
+    // Enable Carousel Indicators
+    $(".item1").click(function(){
+        $("#carouselExampleIndicators").carousel(0);
+    });
+    $(".item2").click(function(){
+        $("#carouselExampleIndicators").carousel(1);
+    });
+    $(".item3").click(function(){
+        $("#carouselExampleIndicators").carousel(2);
+    });
+    
+});
+</script>
+
 
 </body>
 </html>
