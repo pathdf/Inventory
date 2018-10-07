@@ -1,6 +1,5 @@
 package com.inventory.controller;
 
-import java.lang.invoke.MethodType;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,23 +10,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.inventory.ajax.response.Message;
 import com.inventory.converters.ItemConverter;
 import com.inventory.entity.Item;
 import com.inventory.service.ItemService;
 import com.inventory.ui.bean.ItemBean;
-import com.inventory.ui.bean.VendorBean;
-
 @Controller
-public class VendorController {
+public class ItemController {
+
+	@Autowired
+	private ItemService itemService;
 	
-	@RequestMapping(value="/saveVendor.do",method=RequestMethod.POST)
-	public @ResponseBody Message saveVendor(@RequestBody VendorBean vendorBean){
-		Message message = new Message();
-		if(vendorBean == null){
-			return message;
-		}else{
-			return message;
+	@Autowired
+	private MessageSource messageSource;
+	
+	@RequestMapping(value="/getItems.do", method = RequestMethod.POST)
+	public @ResponseBody List<ItemBean> getItemsByName(
+			@RequestBody ItemBean itemBean) {
+		List<Item> items = itemService.findItemsByName(itemBean.getItemName());
+		List<ItemBean> itemBeans = null;
+		if (items != null) {
+			itemBeans = ItemConverter.getUIBeanListFromEntityList(items);
 		}
+		return itemBeans;
 	}
 }

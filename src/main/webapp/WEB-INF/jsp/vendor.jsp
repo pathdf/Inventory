@@ -15,6 +15,7 @@
 <link rel='stylesheet'
 	href='resources/plugin/bootstrap/css/bootstrap.min.css'>
 <jsp:include page="./headerLocalizedData.jsp" />
+<script src="resources/js/common.js"></script>
 <script src="resources/js/vendor.js"></script>
 <link rel="stylesheet" href="resources/css/vendor.css">
 <link rel="stylesheet" href="resources/css/footer.css">
