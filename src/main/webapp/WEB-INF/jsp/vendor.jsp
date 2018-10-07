@@ -17,13 +17,14 @@
 <jsp:include page="./headerLocalizedData.jsp" />
 <script src="resources/js/common.js"></script>
 <script src="resources/js/vendor.js"></script>
+<link rel="stylesheet" href="resources/css/header.css">
 <link rel="stylesheet" href="resources/css/vendor.css">
 <link rel="stylesheet" href="resources/css/footer.css">
 </head>
 <body>
 	<jsp:include page="./header.jsp" />
 	<div class="container">
-		<form autocomplete="off" class="form-horizontal" action="javascript:void(0)">
+		<form autocomplete="off" class="form-horizontal" action="#">
 			<div class="form-group">
 				<label class="col-sm-2 control-label"><spring:message code="vendor.name.label"></spring:message></label>
 				<div class="col-sm-4">
@@ -83,7 +84,6 @@
 			var data = {
 				csrfToken : _csrfToken
 			}
-
 			Vendor.init(data);
 		});
 	</script>

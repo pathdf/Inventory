@@ -41,3 +41,18 @@ Common.isSpecialKey = function(event) {
 		return false;
 	}
 }
+
+Common.csrfToken = null;
+
+
+Common.setCsrfToken = function(csrfToken){
+	this.csrfToken = csrfToken;
+}
+
+Common.getCsrfToken = function(){
+	return this.csrfToken;
+}
+
+Common.init = function(data){
+	Common.setCsrfToken(data.csrfToken);
+}

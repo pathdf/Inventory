@@ -41,6 +41,10 @@ public class LoginController {
 		if (logout != null) {
 			model.addObject("msg", "You've been logged out successfully.");
 		}
+		
+		if(StringUtils.isBlank((String)model.getModelMap().get("targetUrl"))){
+			model.addObject("targetUrl", "/welcome");
+		}
 		model.setViewName("login");
 
 		return model;

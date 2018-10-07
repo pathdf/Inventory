@@ -43,7 +43,7 @@ Vendor.getCsrfToken = function(){
 }
 
 Vendor.init = function(data) {
-	Vendor.setCsrfToken(data.csrfToken);
+	Common.setCsrfToken(data.csrfToken);
 	Vendor.initializedItemNameInput();
 	Vendor.initializedSaveVendorButton();
 }
@@ -129,13 +129,12 @@ Vendor.saveVendorAjax = function(data){
 	$.ajax({
 		headers : {
 			'Content-Type' : 'application/json',
-			'X-CSRF-TOKEN' : Vendor.getCsrfToken()
+			'X-CSRF-TOKEN' : Common.getCsrfToken()
 		},
 		type : 'POST',
-		url : 'saveVendor.do',
-		data : JSON.stringify(data),
-		dataType : 'json',
-		success : function(data) {
+		url : '/j_spring_security_logout',
+		data : JSON.stringify(''),
+		success : function() {
 			console.log('succesfully saved vendor');
 		},
 		error : function(err) {
@@ -150,7 +149,7 @@ Vendor.getItemStatus = function(item) {
 	$.ajax({
 		headers : {
 			'Content-Type' : 'application/json',
-			'X-CSRF-TOKEN' : Vendor.getCsrfToken()
+			'X-CSRF-TOKEN' : Common.getCsrfToken()
 		},
 		type : 'POST',
 		url : 'getItems.do',
