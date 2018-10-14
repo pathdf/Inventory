@@ -1,11 +1,15 @@
 package com.inventory.ui.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VendorBean {
 	
 	private Long vendorId;
 	private String vendorName;
 	private String vendorAddress;
 	private String vendorContactNo;
+	private List<ItemBean> itemBeans = new ArrayList<ItemBean>();
 	private String itemName;
 	private Long itemId;
 
@@ -56,5 +60,13 @@ public class VendorBean {
 	public void setItemId(Long itemId) {
 		this.itemId = itemId;
 	}
-	
+
+	public List<ItemBean> getItemBeans() {
+		return itemBeans;
+	}
+
+	public void setItemBeans(List<ItemBean> itemBeans) {
+		this.itemBeans = itemBeans;
+	}
+		
 }

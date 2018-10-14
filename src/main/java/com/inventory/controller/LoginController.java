@@ -83,7 +83,7 @@ public class LoginController {
 	public ModelAndView defaultPage() {
 
 		ModelAndView model = new ModelAndView();
-		model.setViewName("vendor");
+		model.setViewName("createVendor");
 		return model;
 
 	}

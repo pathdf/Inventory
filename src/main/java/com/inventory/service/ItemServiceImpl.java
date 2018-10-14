@@ -10,33 +10,37 @@ import com.inventory.dao.ItemDao;
 import com.inventory.entity.Item;
 
 @Service
-@Transactional(readOnly=true)
 public class ItemServiceImpl implements ItemService {
 
 	@Autowired
 	private ItemDao itemDao;
 
 	@Override
+	@Transactional
 	public void saveItem(Item item) {
 		itemDao.saveItem(item);
 	}
 
 	@Override
+	@Transactional
 	public void updateItem(Item item) {
 		itemDao.updateItem(item);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Item findItem(Long id) {
 		return itemDao.findItem(id);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<Item> findAllItems() {
 		return itemDao.findAllItems();
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<Item> findItemsByName(String itemName) {
 		return itemDao.findItemsByName(itemName);
 	}

@@ -9,3 +9,7 @@
 .container{
 	height : 85%;
 }
+
+.padding-left-of-error-msg{
+	padding-left : 30px;
+}
