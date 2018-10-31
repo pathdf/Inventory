@@ -13,4 +13,6 @@ public interface VendorService {
 	Vendor findVendorByName(String name);
 	List<VendorBean> getAllVendorBeans();
 	void delete(Vendor vendor);
+	List<Object[]> getAllVendorWithItems();
+	List<Object[]> getAllVendorWithItems(int from, int pageSize);
 }

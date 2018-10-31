@@ -11,11 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -44,7 +47,10 @@ public class VendorController {
 	
 	private final String ALPHANUEMRIC_WITHOUT_CHARACTERS_REGEX="^[a-zA-Z0-9]+[a-zA-Z0-9\\s\\x21-\\x24\\x26-\\x2F\\x40\\x5C\\x60]*$";
 	private final String NUMERIC_REGEX="^[0-9]+$";
-			
+	
+	@Value("${paging.max.records}")
+	private String maxRecords;
+	
 	@RequestMapping(value="/saveVendor.do",method=RequestMethod.POST)
 	public @ResponseBody Map<String,Object> saveVendor(@RequestBody VendorBean vendorBean){
 		Map<String,	Object> jsonMap = new HashMap<String, Object>();
@@ -110,12 +116,42 @@ public class VendorController {
 	}
 	
 	@RequestMapping(value="/viewVendor.do",method=RequestMethod.GET)
-	public ModelAndView getAllVendors(HttpServletRequest req, HttpServletResponse res){
+	public ModelAndView getAllVendors(HttpServletRequest req,
+			HttpServletResponse res, 
+			@RequestParam(value="from", required=false)String from,
+			@RequestParam(value="pageSize", required=false)String pageSize) {
+		if(StringUtils.isBlank(from)){
+			from ="0";
+		}
+		if(StringUtils.isBlank(pageSize)){
+			pageSize = this.maxRecords;
+		}
+		
 		ModelAndView model = new ModelAndView();
-		List<VendorBean> vendorBeans = vendorService.getAllVendorBeans();
+		List<Object[]> vendorsCount = vendorService.getAllVendorWithItems();
+		List<Object[]> vendors = vendorService.getAllVendorWithItems(Integer.parseInt(from), Integer.parseInt(pageSize));
+		List<VendorBean> vendorBeans = VendorConverter.getUiBeanListFromEntityArrayList(vendors);
 		model.addObject("vendorBeans", vendorBeans);
+		model.addObject("records", vendorsCount.size());
 		model.setViewName("viewVendor");
 		return model;
+	}
+	
+	@RequestMapping(value="/restrictedViewVendor.do", method=RequestMethod.GET)
+	public @ResponseBody List<VendorBean> getRestrictedData(
+			@RequestParam(value="from", required=false)String from,
+			@RequestParam(value="pageSize", required=false)String pageSize){
+		if(StringUtils.isBlank(from)){
+			from ="0";
+		}
+		if(StringUtils.isBlank(pageSize)){
+			pageSize = this.maxRecords;
+		}
+		
+		ModelAndView model = new ModelAndView();
+		List<Object[]> vendors = vendorService.getAllVendorWithItems(Integer.parseInt(from), Integer.parseInt(pageSize));
+		List<VendorBean> vendorBeans = VendorConverter.getUiBeanListFromEntityArrayList(vendors);
+		return vendorBeans;
 	}
 	
 	@RequestMapping(value="/updateVendor.do",method=RequestMethod.POST)
@@ -137,7 +173,7 @@ public class VendorController {
 			} else if (matchViewAndUpdatedVendorBean(viewVendorBean,updatedVendorBean)) {
 				jsonMap.put("message", messageSource.getMessage("message.update.vendor", null, Locale.US));
 			} else {
-				if (!viewVendorBean.getVendorName().equals(updatedVendorBean.getVendorName())
+				if (!viewVendorBean.getVendorName().equalsIgnoreCase(updatedVendorBean.getVendorName())
 						&& validateVendorNameInDb(updatedVendorBean)) {
 					jsonMap.put("error", messageSource.getMessage("vendor.name.is.already.present.in.db", null, Locale.US));
 				} else {
@@ -161,10 +197,10 @@ public class VendorController {
 }
 
 public boolean matchViewAndUpdatedVendorBean(VendorBean viewVendorBean, VendorBean updateVendorBean){
-	if(!viewVendorBean.getVendorName().equals(updateVendorBean.getVendorName())
-			|| !viewVendorBean.getVendorAddress().equals(updateVendorBean.getVendorAddress())
-			|| !viewVendorBean.getVendorContactNo().equals(updateVendorBean.getVendorContactNo())
-			|| !viewVendorBean.getItemName().equals(updateVendorBean.getItemName())){
+	if(!viewVendorBean.getVendorName().equalsIgnoreCase(updateVendorBean.getVendorName())
+			|| !viewVendorBean.getVendorAddress().equalsIgnoreCase(updateVendorBean.getVendorAddress())
+			|| !viewVendorBean.getVendorContactNo().equalsIgnoreCase(updateVendorBean.getVendorContactNo())
+			|| !viewVendorBean.getItemName().equalsIgnoreCase(updateVendorBean.getItemName())){
 		return false;
 	}
 	return true;

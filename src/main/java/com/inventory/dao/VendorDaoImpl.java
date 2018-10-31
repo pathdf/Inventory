@@ -2,6 +2,7 @@ package com.inventory.dao;
 
 import java.util.List;
 
+import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,7 +38,7 @@ public class VendorDaoImpl implements VendorDao {
 	@Override
 	public Vendor findVendorByName(String name) {
 		return (Vendor) sessionFactory.getCurrentSession()
-				.createQuery("FROM Vendor v WHERE v.vendorName = :vendorName")
+				.createQuery("FROM Vendor v WHERE UPPER(v.vendorName) = UPPER(:vendorName)")
 				.setParameter("vendorName", name).uniqueResult();
 	}
 
@@ -45,5 +46,16 @@ public class VendorDaoImpl implements VendorDao {
 	public void delete(Vendor vendor) {
 		sessionFactory.getCurrentSession().delete(vendor);		
 	}
+	
+	@SuppressWarnings("deprecation")
+	public List<Object[]> getAllVendorWithItems() {
+		String HQL = "SELECT v.vendorId, v.vendorName, v.address, v.contactNo, i.itemId, i.itemName FROM Vendor v INNER JOIN v.items i";
+		return sessionFactory.getCurrentSession().createQuery(HQL).list();
+	}
 
+	@SuppressWarnings("deprecation")
+	public List<Object[]> getAllVendorWithItems(int from, int pageSize) {
+		String HQL = "SELECT v.vendorId, v.vendorName, v.address, v.contactNo, i.itemId, i.itemName FROM Vendor v INNER JOIN v.items i order by v.vendorId asc";
+		return sessionFactory.getCurrentSession().createQuery(HQL).setFirstResult(from).setMaxResults(pageSize).list();
+	}
 }

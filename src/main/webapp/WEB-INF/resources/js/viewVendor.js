@@ -12,6 +12,7 @@ ViewVendor.VendorBean = function(vendorId,vendorName,vendorAddress,vendorContact
 ViewVendor.init = function(data){
 	Common.init(data);
 	ViewVendor.bindUIActions();
+	Paging.init(data.pagingId, data.pageSizeId,data.records,ViewVendor.pagingCallBack)
 }
 
 ViewVendor.bindUIActions = function(){
@@ -141,16 +142,16 @@ ViewVendor.bindToggleUpdateButton = function(viewVendorBean){
 		var localItemName = $('#itemName').val();
 		var form = $('#editPopupForm');
 		updateButton.setAttribute('disabled',true);
-		if(form[0].elements[0].value.trim() != form[0].elements[0].defaultValue  && form[0].elements[0].value.trim() != viewVendorBean.vendorName.trim()){
+		if(form[0].elements[0].value.trim() != form[0].elements[0].defaultValue  && form[0].elements[0].value.trim().toUpperCase() != viewVendorBean.vendorName.trim().toUpperCase()){
 			updateButton.removeAttribute('disabled');
 		}
-		if(form[0].elements[1].value.trim() != form[0].elements[1].defaultValue  && form[0].elements[1].value.trim() != viewVendorBean.vendorAddress.trim()){
+		if(form[0].elements[1].value.trim() != form[0].elements[1].defaultValue  && form[0].elements[1].value.trim().toUpperCase() != viewVendorBean.vendorAddress.trim().toUpperCase()){
 			updateButton.removeAttribute('disabled');
 		}
-		if(form[0].elements[2].value.trim() != form[0].elements[2].defaultValue  && form[0].elements[2].value.trim() != viewVendorBean.vendorContactNo.trim()){
+		if(form[0].elements[2].value.trim() != form[0].elements[2].defaultValue  && form[0].elements[2].value.trim().toUpperCase() != viewVendorBean.vendorContactNo.trim().toUpperCase()){
 			updateButton.removeAttribute('disabled');
 		}
-		if(form[0].elements[3].value.trim() != form[0].elements[3].defaultValue  && form[0].elements[3].value.trim() != viewVendorBean.itemName.trim()){
+		if(form[0].elements[3].value.trim() != form[0].elements[3].defaultValue  && form[0].elements[3].value.trim().toUpperCase() != viewVendorBean.itemName.trim().toUpperCase()){
 			updateButton.removeAttribute('disabled');
 		}
 		
@@ -190,7 +191,7 @@ ViewVendor.bindUpdatePopupButton = function(viewVendorBean) {
 			options = $('#itemList option');
 			if (!Common.isUndefinedORNull(options)) {
 				for (var index = 0; index < options.length; index++) {
-					if (itemName == options[index].value) {
+					if (itemName.toUpperCase() == options[index].value.toUpperCase()) {
 						itemId = options[index].id;
 					}
 				}
@@ -264,4 +265,44 @@ ViewVendor.updateVendorAjax = function(data){
 		}
 	});
 
+}
+
+ViewVendor.pagingCallBack = function(from,pageSize){
+	//window.location.href="/Inventory/viewVendor.do?from="+from+"&pageSize="+pageSize+"&_csrf="+Common.getCsrfToken();
+	$.ajax({
+		headers : {
+			'Content-Type' : 'application/json',
+			'X-CSRF-TOKEN' : Common.getCsrfToken()
+		},
+		type : 'GET',
+		url : 'restrictedViewVendor.do?from='+from+'&pageSize='+pageSize,
+		dataType : 'json',
+		beforeSend : function(){
+			$('#tableBodyId')[0].innerHTML="";
+		},
+		success : function(jsonMap){
+			if(!Common.isUndefinedORNull(jsonMap)){
+				var recordCount = (from/pageSize)*pageSize;
+				var tableRow="";
+				for(var index = 0; index < jsonMap.length; index++){
+					tableRow+="<tr>";
+					tableRow+="<td id='"+"vendorId_"+jsonMap[index].vendorId+"'>"+(++recordCount)+"</td>";
+					tableRow+="<td id='"+"vendorName_"+jsonMap[index].vendorId+"'>"+jsonMap[index].vendorName+"</td>";
+					tableRow+="<td id='"+"vendorAddress_"+jsonMap[index].vendorId+"'>"+jsonMap[index].vendorAddress+"</td>";
+					tableRow+="<td id='"+"vendorContactNo_"+jsonMap[index].vendorId+"'>"+jsonMap[index].vendorContactNo+"</td>";
+					tableRow+="<td id='"+"itemName_"+jsonMap[index].vendorId+"'>"+jsonMap[index].itemName+"</td>";
+					tableRow+="<input type='hidden' id='"+"itemId_"+jsonMap[index].vendorId+"' value='"+jsonMap[index].itemId+"'>";
+					tableRow+="<td>";
+					tableRow+="<button value='"+jsonMap[index].vendorId+"'"+"type='button' class='btn btn-primary btn-xs edit-button-class'>"+headerLocalizedData['edit.button.label']+"</button>";
+					tableRow+=" ";
+					tableRow+="<button value='"+jsonMap[index].vendorId+"'"+"type='button' class='btn btn-danger btn-xs delete-button-class'>"+headerLocalizedData['delete.button.label']+"</button>";
+					tableRow+="</td>";
+					tableRow+="</tr>";
+					
+				}
+				$('#tableBodyId')[0].innerHTML=tableRow;
+				ViewVendor.bindUIActions();
+			}
+		}
+	});
 }

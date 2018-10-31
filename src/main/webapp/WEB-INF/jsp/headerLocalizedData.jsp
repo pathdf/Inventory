@@ -17,4 +17,6 @@ headerLocalizedData['alert.popup.cancel.btn'] = "<spring:message code='alert.pop
 headerLocalizedData['confirm.popup.delete.vendor.message'] = "<spring:message code='confirm.popup.delete.vendor.message' javaScriptEscape='true' />";
 headerLocalizedData['message.delete.vendor'] = "<spring:message code='message.delete.vendor' javaScriptEscape='true' />";
 headerLocalizedData['error.vendor.object.is.not.available'] = "<spring:message code='error.vendor.object.is.not.available' javaScriptEscape='true' />";
+headerLocalizedData['edit.button.label'] = "<spring:message code='edit.button.label' javaScriptEscape='true' />";
+headerLocalizedData['delete.button.label'] = "<spring:message code='delete.button.label' javaScriptEscape='true' />";
 </script>

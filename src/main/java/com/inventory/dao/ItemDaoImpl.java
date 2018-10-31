@@ -42,7 +42,7 @@ public class ItemDaoImpl implements ItemDao {
 			itemName+="%";
 		}
 		return (List<Item>) sessionFactory.getCurrentSession()
-				.createQuery("FROM Item i WHERE i.itemName LIKE :itemName")
+				.createQuery("FROM Item i WHERE UPPER(i.itemName) LIKE UPPER(:itemName)")
 				.setParameter("itemName", itemName).list();
 	}
 

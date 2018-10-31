@@ -83,8 +83,8 @@
 
         </div>
         <div class="modal-footer">
-          <button id="editPopupUpdateButtonId" type="button" class="btn btn-default">Update</button><!--we are using save id because we are calling createVendor.js  -->
-          <button id="editPopupCancelButtonId" type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button id="editPopupUpdateButtonId" type="button" class="btn btn-default"><spring:message code="update.button.label"></spring:message></button><!--we are using save id because we are calling createVendor.js  -->
+          <button id="editPopupCancelButtonId" type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="cancel.button.label"></spring:message></button>
         </div>
       </div>
     </div>
@@ -94,46 +94,49 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>#</th>
-						<th>Vendor Name</th>
-						<th>Vendor Address</th>
-						<th>Vednor Contact No.</th>
-						<th>Item Name</th>
-						<th>Action</th>
+						<th><spring:message code="vendor.id.sign.label"></spring:message></th>
+						<th><spring:message code="vendor.name.label"></spring:message></th>
+						<th><spring:message code="vendor.address.label"></spring:message></th>
+						<th><spring:message code="vendor.contact.no.label"></spring:message></th>
+						<th><spring:message code="item.name.label"></spring:message></th>
+						<th><spring:message code="action.label.name"></spring:message></th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="tableBodyId">
+				<%int count=0; %>
 				<c:forEach var="vendorBean" items="${vendorBeans}">
-				     <c:forEach var="itemBean" items="${vendorBean.itemBeans}">
+				     <%-- <c:forEach var="itemBean" items="${vendorBean.itemBeans}"> --%>
 							<tr>
-								<td id="vendorId_${vendorBean.vendorId}">${vendorBean.vendorId}</td>
+								<td id="vendorId_${vendorBean.vendorId}"><%=++count%></td>
 								<td id="vendorName_${vendorBean.vendorId}">${vendorBean.vendorName}</td>
 								<td id="vendorAddress_${vendorBean.vendorId}">${vendorBean.vendorAddress}</td>
 								<td id="vendorContactNo_${vendorBean.vendorId}">${vendorBean.vendorContactNo}</td>
-								<td id="itemName_${vendorBean.vendorId}">${itemBean.itemName}</td>
-								<input type="hidden" id="itemId_${vendorBean.vendorId}" value="${itemBean.itemId}">
+								<td id="itemName_${vendorBean.vendorId}">${vendorBean.itemName}</td>
+								<input type="hidden" id="itemId_${vendorBean.vendorId}" value="${vendorBean.itemId}">
 								<td>
-								<button value="${vendorBean.vendorId}" type="button" class="btn btn-primary btn-xs edit-button-class">Edit</button>
-								<button value="${vendorBean.vendorId}" type="button" class="btn btn-danger btn-xs delete-button-class">Delete</button>
+								<button value="${vendorBean.vendorId}" type="button" class="btn btn-primary btn-xs edit-button-class"><spring:message code="edit.button.label"></spring:message></button>
+								<button value="${vendorBean.vendorId}" type="button" class="btn btn-danger btn-xs delete-button-class"><spring:message code="delete.button.label"></spring:message></button>
 								</td>
 							</tr>
-						</c:forEach>
+						<%-- </c:forEach> --%>
 				</c:forEach>
 					
 				</tbody>
 			</table>
 		</div>
 	</div>
-
+	<jsp:include page="./paging.jsp" />
 	<jsp:include page="./footer.jsp" />
 	<script>
 		$(document).ready(function() {
 			var _csrfToken = "${_csrf.token}";
 			var data = {
-				csrfToken : _csrfToken
+				csrfToken : _csrfToken,
+				pagingId : '#pagingId',
+				pageSizeId : '#pageSizeId',
+				records : "${records}"
 			}
 			ViewVendor.init(data);
-			
 		});
 	</script>
 </body>

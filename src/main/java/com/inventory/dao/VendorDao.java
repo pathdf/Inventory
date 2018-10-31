@@ -12,4 +12,6 @@ public interface VendorDao {
 	List<Vendor> findAllVendors();
 	Vendor findVendorByName(String name);
 	void delete(Vendor vendor);
+	List<Object[]> getAllVendorWithItems();
+	List<Object[]> getAllVendorWithItems(int from, int pageSize);
 }

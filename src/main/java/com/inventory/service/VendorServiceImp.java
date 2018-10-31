@@ -52,10 +52,23 @@ public class VendorServiceImp implements VendorService {
 	public List<VendorBean> getAllVendorBeans(){
 		return VendorConverter.getUIBeanListFromEntityList(vendorDao.findAllVendors());
 	}
-
+	
 	@Override
 	@Transactional
 	public void delete(Vendor vendor) {
 		vendorDao.delete(vendor);
 	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Object[]> getAllVendorWithItems(int from, int pageSize) {
+		return vendorDao.getAllVendorWithItems(from,pageSize);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<Object[]> getAllVendorWithItems() {
+		return vendorDao.getAllVendorWithItems();
+	}
+		
 }

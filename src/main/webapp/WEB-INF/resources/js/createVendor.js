@@ -52,7 +52,7 @@ CreateVendor.matchItemListToItemName = function(_this){
 	options = $('#itemList option');
 	if (!Common.isUndefinedORNull(options)) {
 		for (var index = 0; index < options.length; index++) {
-			if (_this.value === options[index].value) {
+			if (_this.value.toUpperCase() === options[index].value.toUpperCase()) {
 				return true;
 			}
 		}
@@ -93,7 +93,7 @@ CreateVendor.bindSaveVendorButton = function() {
 			options = $('#itemList option');
 			if (!Common.isUndefinedORNull(options)) {
 				for (var index = 0; index < options.length; index++) {
-					if (itemName == options[index].value) {
+					if (itemName.toUpperCase() == options[index].value.toUpperCase()) {
 						itemId = options[index].id;
 					}
 				}
